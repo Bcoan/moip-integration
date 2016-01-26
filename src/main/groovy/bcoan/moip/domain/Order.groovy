@@ -40,7 +40,7 @@ class Order extends DomainEntity {
 
     BigDecimal getDiscount() {
         if(coupon) {
-            coupon.discount * total
+            return coupon.discount * total
         }
 
         BigDecimal.ZERO
