@@ -5,6 +5,7 @@ import bcoan.moip.domain.Customer
 import bcoan.moip.domain.Item
 import bcoan.moip.domain.Order
 import bcoan.moip.domain.Product
+import bcoan.moip.exception.UnprocessableEntityException
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -31,12 +32,40 @@ class OrderServiceTest extends AbstractServiceTest {
 
     }
 
+    @Test
+    void createOrderWithoutDiscont() {
+
+        def order = service.create(orderWithoutDiscount())
+
+        assertThat(order.discount, is(equalTo(BigDecimal.ZERO)))
+        assertThat(order.totalWithDiscount, is(equalTo(BigDecimal.valueOf(100))))
+
+    }
+
+    @Test(expected = UnprocessableEntityException)
+    void checkoutOrderWithoutPayment() {
+
+
+        def order = service.create(newOrder())
+
+        service.checkout(order)
+
+
+    }
+
     Order newOrder() {
 
         new Order(customer: new Customer(name: "bruno", email: "brunocoann@gmail.com"),
                 itens: [new Item(quantity: 1,
                         product: new Product(id: "a6ede688-b4bd-4315-9f07-5f57555bda28", price: 100))],
                 coupon: new Coupon(id: "97faca93-2424-44d5-81bd-cfc56791d0ae", key: "DESCONTO5", discount: 0.05))
+    }
+
+    Order orderWithoutDiscount() {
+
+        new Order(customer: new Customer(name: "bruno", email: "brunocoann@gmail.com"),
+                itens: [new Item(quantity: 1,
+                        product: new Product(id: "a6ede688-b4bd-4315-9f07-5f57555bda28", price: 100))])
     }
 }
 

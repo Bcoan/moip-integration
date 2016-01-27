@@ -2,6 +2,7 @@ package bcoan.moip.service
 
 import bcoan.moip.domain.Order
 import bcoan.moip.exception.NotFoundException
+import bcoan.moip.exception.UnprocessableEntityException
 import bcoan.moip.repository.OrderRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -52,8 +53,17 @@ class OrderService {
 
         order = repository.findOne(order.id)
 
+        validate(order)
+
         order = moipService.create(order)
 
         repository.save(order)
+    }
+
+
+    void validate(Order order) {
+        if(!order.payment) {
+            throw new UnprocessableEntityException("order needs payment to checkout")
+        }
     }
 }

@@ -6,6 +6,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.context.web.WebAppConfiguration
 
+import javax.transaction.Transactional
+
 /**
  * Created by brunocoan on 1/26/16.
  */
@@ -13,5 +15,6 @@ import org.springframework.test.context.web.WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = MoipIntegrationApplication.class)
 @WebAppConfiguration
+@Transactional
 class AbstractServiceTest {
 }

@@ -27,6 +27,7 @@ class PaymentService {
 
         Order order = orderService.findOne(orderId)
         payment.order = order
+        order.payment = payment
         repository.save(payment)
     }
 
