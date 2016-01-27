@@ -1,6 +1,7 @@
 package bcoan.moip.service
 
 import bcoan.moip.MoipIntegrationApplication
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
@@ -17,4 +18,8 @@ import javax.transaction.Transactional
 @WebAppConfiguration
 @Transactional
 class AbstractServiceTest {
+    @Test
+    void test() {
+
+    }
 }
